@@ -2,13 +2,17 @@ package com.kobe.light.ui.scan;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +26,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -57,6 +65,7 @@ import okhttp3.RequestBody;
 
 public class ScanActivity extends BaseActivity<ScanContract.presenter> implements View.OnClickListener, ScanContract.view {
     private final int REQUEST_CODE_SCAN = 101;
+    private static final double EARTH_RADIUS = 6378137.0;
     private ImageView mIvBack;
     private ImageView mIvScan;
     private TextView tv_device_road;//设备道路
@@ -98,8 +107,6 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     private int mLampPoleType;
     private String mLampPoleName;
 
-    private LocationManager mLocationManager;
-    private String mLocationProvider;
     private String mGpsLatitude;
     private String mGpsLongitude;
 
@@ -156,6 +163,8 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
 
     private final List<String> mImageUrlList = new ArrayList<>();
     private UploadAdapter mAdapter;
+    private LocationManager mLocationManager;
+    private String mLocationProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +261,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
             public void onItemAddClick(View view, int position) {
                 EasyPhotos.createAlbum(ScanActivity.this, true, false, GlideEngine.getInstance())
                         .setFileProviderAuthority("com.kobe.light.fileprovider")
-                        .setCount(10)
+                        .setCount(8)
                         .start(new SelectCallback() {
                             @Override
                             public void onResult(ArrayList<Photo> photos, boolean isOriginal) {
@@ -376,35 +385,46 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
             case R.id.tv_to_position:
                 //获取地理位置管理器
                 mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                //获取所有可用的位置提供器
-                List<String> providers = mLocationManager.getProviders(true);
-                if (providers.contains(LocationManager.GPS_PROVIDER)) {
-                    //如果是GPS
-                    mLocationProvider = LocationManager.GPS_PROVIDER;
-                } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
-                    //如果是Network
-                    mLocationProvider = LocationManager.NETWORK_PROVIDER;
+
+                // 判断GPS模块是否开启，如果没有则开启
+                if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+                    ToastUtil.showShort(ScanActivity.this, "请打开GPS");
+                    // 转到手机设置界面，用户设置GPS
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, 0); // 设置完成后返回到原来的界面
+                } else {
+                   /* //获取所有可用的位置提供器
+                    List<String> providers = mLocationManager.getProviders(true);
+                    if (providers.contains(LocationManager.GPS_PROVIDER)) {
+                        //如果是GPS
+                        mLocationProvider = LocationManager.GPS_PROVIDER;
+                    } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+                        //如果是Network
+                        mLocationProvider = LocationManager.NETWORK_PROVIDER;
+                    }
+                    //获取Location
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    Location location = mLocationManager.getLastKnownLocation(mLocationProvider);
+                    if (location != null) {
+                        //不为空,显示地理位置经纬度
+                        mGpsLatitude = location.getLatitude() + "";
+                        mGpsLongitude = location.getLongitude() + "";
+                    }*/
+                    initLocationOption();
+//                    getDistance()
+                    tv_to_position.setTextColor(getResources().getColor(R.color.color_grey));
+                    mTvSubmit.setEnabled(true);
                 }
-                //获取Location
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                Location location = mLocationManager.getLastKnownLocation(mLocationProvider);
-                if (location != null) {
-                    //不为空,显示地理位置经纬度
-                    mGpsLatitude = location.getLatitude() + "";
-                    mGpsLongitude = location.getLongitude() + "";
-                }
-                tv_to_position.setTextColor(getResources().getColor(R.color.color_grey));
-                ToastUtil.showShort(this, "获取经纬度成功");
-                mTvSubmit.setEnabled(true);
+
                 break;
             case R.id.tv_road_direct:
                 showRoadDirectDialog();
@@ -883,6 +903,81 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     @Override
     public void submitSuccess(SubmitResponse submitResponse) {
         ToastUtil.showShort(this, submitResponse.msg);
+        tv_device_road.setText("");
+        tv_device_num.setText("");
+        tv_road_range.setText("");
+        tv_light_port.setText("");
+        mPoleCode = "";
+        mLampPoleType = 0;
+        mLampPoleName = "";
+
+        mRoadDirectStr = "";
+        mRoadDirectCode = 0;
+        tv_road_direct.setText(mRoadDirectStr);
+
+        mPolePositionStr = "";
+        mPolePositionCode = 0;
+        tv_pole_position.setText(mPolePositionStr);
+
+        String mShineRoadStr = "";
+        mShineRoadCode = 0;
+        tv_shine_road.setText(mShineRoadStr);
+
+        et_detail_address.setText("");
+        et_remark.setText("");
+
+        mRoadTypeA = "";
+        mRoadTypeACode = 0;
+        mDirectionA = "";
+        mDirectionACode = 0;
+        tv_a.setText("");
+
+        mRoadTypeB = "";
+        mRoadTypeBCode = 0;
+        mDirectionB = "";
+        mDirectionBCode = 0;
+        tv_b.setText("");
+
+        mRoadTypeC = "";
+        mRoadTypeCCode = 0;
+        mDirectionC = "";
+        mDirectionCCode = 0;
+        tv_c.setText("");
+
+        mRoadTypeD = "";
+        mRoadTypeDCode = 0;
+        mDirectionD = "";
+        mDirectionDCode = 0;
+        tv_d.setText("");
+
+        mRoadTypeE = "";
+        mRoadTypeECode = 0;
+        mDirectionE = "";
+        mDirectionECode = 0;
+        tv_e.setText("");
+
+        mRoadTypeF = "";
+        mRoadTypeFCode = 0;
+        mDirectionF = "";
+        mDirectionFCode = 0;
+        tv_f.setText("");
+
+        mGpsLatitude = "";
+        mGpsLongitude = "";
+
+        tv_pole_num.setText("1");
+        ll_a.setVisibility(View.VISIBLE);
+        ll_b.setVisibility(View.GONE);
+        ll_c.setVisibility(View.GONE);
+        ll_d.setVisibility(View.GONE);
+        ll_e.setVisibility(View.GONE);
+        ll_f.setVisibility(View.GONE);
+
+        tv_to_position.setTextColor(getResources().getColor(R.color.color_blue));
+        mTvSubmit.setEnabled(false);
+        mImageUrlList.clear();
+        mFilePathList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -893,5 +988,107 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     @Override
     public void uploadSuccess(UploadResponse uploadResponse) {
         mImageUrlList.addAll(uploadResponse.data.url);
+    }
+
+    // 返回单位是米
+    public double getDistance(double longitude1, double latitude1,
+                              double longitude2, double latitude2) {
+        double Lat1 = rad(latitude1);
+        double Lat2 = rad(latitude2);
+        double a = Lat1 - Lat2;
+        double b = rad(longitude1) - rad(longitude2);
+        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
+                + Math.cos(Lat1) * Math.cos(Lat2)
+                * Math.pow(Math.sin(b / 2), 2)));
+        s = s * EARTH_RADIUS;
+        s = Math.round(s * 10000) / 10000;
+        return s;
+    }
+
+    private double rad(double d) {
+        return d * Math.PI / 180.0;
+    }
+
+    /**
+     * 初始化定位参数配置
+     */
+    public LocationClient mLocationClient = null;
+
+    private void initLocationOption() {
+        //定位服务的客户端。宿主程序在客户端声明此类，并调用，目前只支持在主线程中启动
+        mLocationClient = new LocationClient(getApplicationContext());
+        //声明LocationClient类实例并配置定位参数
+        LocationClientOption locationOption = new LocationClientOption();
+        MyLocationListener myLocationListener = new MyLocationListener();
+        //注册监听函数
+        mLocationClient.registerLocationListener(myLocationListener);
+        //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        locationOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        //可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        locationOption.setCoorType("gcj02");
+        //可选，默认0，即仅定位一次，设置发起连续定位请求的间隔需要大于等于1000ms才是有效的
+        //        locationOption.setScanSpan(1000);
+        //可选，设置是否需要地址信息，默认不需要
+        locationOption.setIsNeedAddress(true);
+        //可选，设置是否需要地址描述
+        locationOption.setIsNeedLocationDescribe(true);
+        //可选，设置是否需要设备方向结果
+        locationOption.setNeedDeviceDirect(false);
+        //可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+//        locationOption.setLocationNotify(true);
+        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        locationOption.setIgnoreKillProcess(true);
+        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        locationOption.setIsNeedLocationDescribe(true);
+        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        locationOption.setIsNeedLocationPoiList(true);
+        //可选，默认false，设置是否收集CRASH信息，默认收集
+        locationOption.SetIgnoreCacheException(false);
+        //可选，默认false，设置是否开启Gps定位
+        locationOption.setOpenGps(true);
+        //可选，默认false，设置定位时是否需要海拔信息，默认不需要，除基础定位版本都可用
+        locationOption.setIsNeedAltitude(false);
+        //设置打开自动回调位置模式，该开关打开后，期间只要定位SDK检测到位置变化就会主动回调给开发者，该模式下开发者无需再关心定位间隔是多少，定位SDK本身发现位置变化就会及时回调给开发者
+        locationOption.setOpenAutoNotifyMode();
+        //设置打开自动回调位置模式，该开关打开后，期间只要定位SDK检测到位置变化就会主动回调给开发者
+        locationOption.setOpenAutoNotifyMode(3000, 1, LocationClientOption.LOC_SENSITIVITY_HIGHT);
+        //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
+        mLocationClient.setLocOption(locationOption);
+        //开始定位
+        mLocationClient.start();
+    }
+
+    /**
+     * 实现定位回调
+     */
+    public class MyLocationListener extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取经纬度相关（常用）的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+
+            //获取纬度信息
+            double latitude = location.getLatitude();
+            //获取经度信息
+            double longitude = location.getLongitude();
+            mGpsLatitude = latitude + "";
+            mGpsLongitude = longitude + "";
+//            Log.i("cjl", "onReceiveLocation1: " + latitude);
+//            Log.i("cjl", "onReceiveLocation2: " + longitude);
+            if (!TextUtils.equals(mGpsLatitude, "4.9E-324") && !TextUtils.equals(mGpsLongitude, "4.9E-324")) {
+                ToastUtil.showShort(ScanActivity.this, "定位成功!");
+            } else {
+                ToastUtil.showShort(ScanActivity.this, "定位失败，请稍后重试!");
+            }
+            mLocationClient.stop();
+//            //获取定位精度，默认值为0.0f
+//            float radius = location.getRadius();
+//            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
+//            String coorType = location.getCoorType();
+//            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+//            int errorCode = location.getLocType();
+
+        }
     }
 }
