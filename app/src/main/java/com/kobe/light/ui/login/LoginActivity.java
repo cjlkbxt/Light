@@ -15,6 +15,7 @@ import com.kobe.light.response.LoginResponse;
 import com.kobe.light.utils.ToastUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.UltimateBarX;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends BaseActivity<LoginContract.presenter> implements LoginContract.view {
@@ -31,6 +32,17 @@ public class LoginActivity extends BaseActivity<LoginContract.presenter> impleme
                 .fitWindow(false)
                 .light(true)
                 .applyStatusBar();
+        requestAll(new OnPermissionsResultListener() {
+            @Override
+            public void OnSuccess() {
+
+            }
+
+            @Override
+            public void OnFail(List<String> failedPermissionList) {
+
+            }
+        });
     }
 
     @Override

@@ -2,17 +2,12 @@ package com.kobe.light.ui.scan;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -38,8 +30,8 @@ import com.kobe.lib_base.BaseActivity;
 import com.kobe.lib_base.CustomBottomDialog;
 import com.kobe.lib_zxing.zxing.activity.CaptureActivity;
 import com.kobe.light.LightApplication;
-import com.kobe.light.adapter.UploadAdapter;
 import com.kobe.light.R;
+import com.kobe.light.adapter.UploadAdapter;
 import com.kobe.light.constants.DictType;
 import com.kobe.light.engine.GlideEngine;
 import com.kobe.light.location.LocationService;
@@ -94,6 +86,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     private LinearLayout ll_f;//灯头设置F
     private EditText et_remark;//备注
     private TextView mTvSubmit;
+    private TextView tv_gps_address;
 
     private CustomBottomDialog mRoadDirectDialog;//道路方向
     private CustomBottomDialog mPolePositionDialog;//灯杆位置
@@ -176,17 +169,6 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                 .fitWindow(false)
                 .light(true)
                 .applyStatusBar();
-        requestAll(new OnPermissionsResultListener() {
-            @Override
-            public void OnSuccess() {
-
-            }
-
-            @Override
-            public void OnFail(List<String> failedPermissionList) {
-
-            }
-        });
     }
 
     @Override
@@ -224,19 +206,11 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         et_remark = findViewById(R.id.et_remark);
         mRecyclerView = findViewById(R.id.rv_upload);
         mTvSubmit = findViewById(R.id.tv_submit);
+        tv_gps_address = findViewById(R.id.tv_gps_address);
     }
 
     @Override
     protected void initData() {
-        //获取地理位置管理器
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // 判断GPS模块是否开启，如果没有则开启
-        if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            tv_to_position.setText("开启GPS");
-        } else {
-            tv_to_position.setText("GPS已开启定位中");
-            startLocation();
-        }
         mPresenter.getDict(DictType.ROAD_DIRECTION_TYPE);//道路方向
         mPresenter.getDict(DictType.IRRADIATE_ROAD);//照射车道
         mPresenter.getDict(DictType.SHINE_DIRECTION);//照射方向
@@ -841,7 +815,6 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                 if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
                     tv_to_position.setText("开启GPS");
                 } else {
-                    tv_to_position.setText("GPS已开启定位中");
                     startLocation();
                 }
             }
@@ -960,7 +933,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         ll_e.setVisibility(View.GONE);
         ll_f.setVisibility(View.GONE);
 
-        tv_to_position.setTextColor(getResources().getColor(R.color.color_blue));
+//        tv_to_position.setTextColor(getResources().getColor(R.color.color_blue));
         mTvSubmit.setEnabled(false);
         mImageUrlList.clear();
         mFilePathList.clear();
@@ -1009,38 +982,61 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     /**
      * 实现定位回调
      */
+    private int mTimes;
     private final BDAbstractLocationListener mListener = new BDAbstractLocationListener() {
         @Override
         public void onReceiveLocation(BDLocation location) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
-            //获取纬度信息
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                mTimes++;
+//                Log.i("cjl", "onReceiveLocation:222 " + mTimes);
+                //获取纬度信息
                 String latitude = location.getLatitude() + "";
-                if (!TextUtils.equals(latitude, "4.9E-324")) {
-                    mGpsLatitude = latitude;
-                }
                 //获取经度信息
                 String longitude = location.getLongitude() + "";
-                if (!TextUtils.equals(longitude, "4.9E-324")) {
+                if (!TextUtils.equals(latitude, "4.9E-324") && !TextUtils.equals(longitude, "4.9E-324")) {
+                    mGpsLatitude = latitude;
                     mGpsLongitude = longitude;
+                    StringBuffer sb = new StringBuffer(256);
+                    sb.append(location.getAddrStr());
+                    sb.append(location.getLocationDescribe());
+                    tv_gps_address.setVisibility(View.VISIBLE);
+                    tv_gps_address.setText(sb.toString());
+                    tv_to_position.setText("GPS已开启定位中");
                 }
-                Log.i("cjl", "onReceiveLocation1: " + latitude);
-                Log.i("cjl", "onReceiveLocation2: " + longitude);
+//                Log.i("cjl", "onReceiveLocation1: " + latitude);
+//                Log.i("cjl", "onReceiveLocation2: " + longitude);
 
-                tv_to_position.setTextColor(getResources().getColor(R.color.color_grey));
-                mTvSubmit.setEnabled(true);
+//                tv_to_position.setTextColor(getResources().getColor(R.color.color_grey));
+                if (mTimes == 10) {
+                    mTvSubmit.setEnabled(true);
+                }
             }
         }
     };
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取地理位置管理器
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // 判断GPS模块是否开启，如果没有则开启
+        if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+            tv_to_position.setText("开启GPS");
+        } else {
+            startLocation();
+        }
+    }
 
     /***
      * Stop location service
      */
     @Override
     protected void onStop() {
+        mTimes = 0;
+        mTvSubmit.setEnabled(false);
         mLocationService.unregisterListener(mListener); //注销掉监听
         mLocationService.stop(); //停止定位服务
         super.onStop();
