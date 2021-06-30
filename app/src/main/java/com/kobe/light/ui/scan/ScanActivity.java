@@ -59,6 +59,7 @@ import okhttp3.RequestBody;
 
 public class ScanActivity extends BaseActivity<ScanContract.presenter> implements View.OnClickListener, ScanContract.view {
     private final int REQUEST_CODE_SCAN = 101;
+    private final int REQUEST_CODE_OPEN_GPS = 102;
     private static final double EARTH_RADIUS = 6378137.0;
     private ImageView mIvBack;
     private ImageView mIvScan;
@@ -374,7 +375,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                     ToastUtil.showShort(ScanActivity.this, "请开启GPS");
                     // 转到手机设置界面，用户设置GPS
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivityForResult(intent, 666); // 设置完成后返回到原来的界面
+                    startActivityForResult(intent, REQUEST_CODE_OPEN_GPS); // 设置完成后返回到原来的界面
                 } /*else {
                     startLocation();
                 }*/
@@ -811,7 +812,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                     String str2 = str.substring(str1.length() + 1);
                     mPresenter.getPoleInfo(str2);
                 }
-            } else if (requestCode == 666) {
+            } else if (requestCode == REQUEST_CODE_OPEN_GPS) {
                 if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
                     tv_to_position.setText("开启GPS");
                 } else {
@@ -971,9 +972,6 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
 
 
     private void startLocation() {
-        mLocationService = ((LightApplication) getApplication()).mLocationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        mLocationService.registerListener(mListener);
         //注册监听
         mLocationService.setLocationOption(mLocationService.getDefaultLocationClientOption());
         mLocationService.start();
@@ -1020,6 +1018,11 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     @Override
     protected void onStart() {
         super.onStart();
+
+        mLocationService = ((LightApplication) getApplication()).mLocationService;
+        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        mLocationService.registerListener(mListener);
+
         //获取地理位置管理器
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // 判断GPS模块是否开启，如果没有则开启
