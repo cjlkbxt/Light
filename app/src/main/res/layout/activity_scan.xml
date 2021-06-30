@@ -209,7 +209,7 @@
                             android:drawableRight="@drawable/icon_login_next"
                             android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
-                            android:text="去定位"
+                            tools:text="去定位"
                             android:textColor="#3396FB"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -235,8 +235,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginHorizontal="12dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
