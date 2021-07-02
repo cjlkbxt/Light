@@ -214,18 +214,6 @@
                             tools:text="去定位" />
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/tv_gps_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:textColor="#3396FB"
-                        android:textSize="13sp"
-                        android:visibility="gone"
-                        tools:text="无锡市南长区"
-                        tools:visibility="visible" />
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

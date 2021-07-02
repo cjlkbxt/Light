@@ -32,10 +32,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="28">
 
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="U97sduL46RSNj83OLPWN4WFwCk12QXCp" >
-        </meta-data>
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"
@@ -57,7 +53,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.kobe.light.fileprovider"
