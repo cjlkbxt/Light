@@ -45,4 +45,5 @@ public interface LightApi {
     @Multipart
     Observable<UploadResponse> upload(@Part List<MultipartBody.Part> partList);
 
+
 }

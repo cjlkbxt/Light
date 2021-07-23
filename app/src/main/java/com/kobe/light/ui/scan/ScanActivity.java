@@ -163,7 +163,11 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     private String locationProvider = null;
 
     private static final double EARTH_RADIUS = 6378.137;
-    private double rad(double d) { return d * Math.PI / 180.0; }
+
+    private double rad(double d) {
+        return d * Math.PI / 180.0;
+    }
+
     // 返回单位是:千米
     private double getDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
         double Lat1 = rad(latitude1);
@@ -244,15 +248,28 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
 //                Log.i("cjl", "onLocationChanged: ");
                 tv_to_position.setText("GPS已开启定位中");
 
-                mTimes++;
-                mGpsLatitude = location.getLatitude() + "";
-                mGpsLongitude = location.getLongitude() + "";
+                if (mPreLatitude != 0.0) {
+                    mGpsLatitude = location.getLatitude() + "";
+                    mGpsLongitude = location.getLongitude() + "";
+
+
+                    if (getDistance(mPreLongitude, mPreLatitude, location.getLongitude(), location.getLatitude()) < 5.0) {
+                        mTimes++;
+                    }
+                }
+
                 if (mTimes == 10) {
                     mTvSubmit.setEnabled(true);
                 }
+
+                mPreLatitude = location.getLatitude();
+                mPreLongitude = location.getLongitude();
             }
         }
     };
+
+    private double mPreLatitude;
+    private double mPreLongitude;
 
     @Override
     protected int getLayoutId() {
@@ -889,6 +906,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                 Bundle bundle = data.getExtras();
                 if (bundle != null) {
                     String str = bundle.getString("result");
+                    Log.i("cjl", "onActivityResult: " + str);
                     String str1 = str.substring(0, str.indexOf("="));
                     String str2 = str.substring(str1.length() + 1);
                     mPresenter.getPoleInfo(str2);
