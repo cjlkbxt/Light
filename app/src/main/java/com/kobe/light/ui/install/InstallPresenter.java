@@ -1,10 +1,14 @@
 package com.kobe.light.ui.install;
 
+import android.text.TextUtils;
+
 import com.kobe.lib_base.BasePresenterImpl;
 import com.kobe.light.api.LightApi;
 import com.kobe.light.api.RetrofitServiceManager;
+import com.kobe.light.constants.DictType;
 import com.kobe.light.request.BindRequest;
 import com.kobe.light.response.DeviceResponse;
+import com.kobe.light.response.DictResponse;
 import com.kobe.light.response.SubmitResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,7 +22,7 @@ public class InstallPresenter extends BasePresenterImpl<InstallContract.view> im
         super(view);
     }
 
- /*   @Override
+    @Override
     public void getDict(String dictType) {
         DisposableObserver<DictResponse> observer = new DisposableObserver<DictResponse>() {
             @Override
@@ -30,10 +34,6 @@ public class InstallPresenter extends BasePresenterImpl<InstallContract.view> im
                         getView().showShineCarRoadInfo(dictResponse);
                     } else if (TextUtils.equals(dictType, DictType.SHINE_DIRECTION)) {
                         getView().showShineDirectInfo(dictResponse);
-                    } else if (TextUtils.equals(dictType, DictType.IRRADIATE_ROAD_TYPE)) {
-                        getView().showShineRoadInfo(dictResponse);
-                    } else if (TextUtils.equals(dictType, DictType.LAMP_POLE_POSITION)) {
-                        getView().showPolePositionInfo(dictResponse);
                     }
                 }
             }
@@ -53,7 +53,7 @@ public class InstallPresenter extends BasePresenterImpl<InstallContract.view> im
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
         addDisposable(observer);
-    }*/
+    }
 
     @Override
     public void getPoleInfo(String key) {
@@ -87,11 +87,11 @@ public class InstallPresenter extends BasePresenterImpl<InstallContract.view> im
         DisposableObserver<SubmitResponse> observer = new DisposableObserver<SubmitResponse>() {
             @Override
             public void onNext(SubmitResponse submitResponse) {
-//                if (submitResponse.code == 0) {
-//                    getView().submitSuccess(submitResponse);
-//                } else {
-//                    getView().submitError(submitResponse);
-//                }
+                if (submitResponse.code == 0) {
+                    getView().bindSuccess(submitResponse);
+                } else {
+                    getView().bindError(submitResponse);
+                }
             }
 
             @Override

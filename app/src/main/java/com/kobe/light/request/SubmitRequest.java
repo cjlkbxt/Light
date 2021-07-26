@@ -7,7 +7,7 @@ public class SubmitRequest {
     public String gpsLongitude;
     public int lampPoleType;
     public String lampPoleName;
-    public String pic;
+    public String lampPic;
     public String poleCode;
     public String lampHolderSetting;
     public int roadDirectType;

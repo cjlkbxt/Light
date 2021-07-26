@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ScanActivity extends BaseActivity implements View.OnClickListener {
     private final int REQUEST_CODE_SCAN = 101;
+    private final int REQUEST_CODE_INSTALL = 102;
 
     private ImageView mIvBack;
     private TextView mTvTitle;
@@ -102,10 +103,13 @@ public class ScanActivity extends BaseActivity implements View.OnClickListener {
             if (requestCode == REQUEST_CODE_SCAN) {
                 Bundle bundle = data.getExtras();
                 if (bundle != null) {
-                    String result = bundle.getString("result");
+                    String str = bundle.getString("result");
+                    String str1 = str.substring(0, str.indexOf("="));
+                    String str2 = str.substring(str1.length() + 1);
+
                     Intent intent = new Intent(this, InstallActivity.class);
-                    intent.putExtra("result", result);
-                    startActivity(intent);
+                    intent.putExtra("result", str2);
+                    startActivityForResult(intent, REQUEST_CODE_INSTALL);
                 }
             }
         }

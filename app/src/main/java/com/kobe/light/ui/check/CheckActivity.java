@@ -427,7 +427,7 @@ public class CheckActivity extends BaseActivity<CheckContract.presenter> impleme
                     submitRequest.gpsLongitude = mGpsLongitude;
                     submitRequest.lampPoleType = mLampPoleType;
                     submitRequest.roadDirectType = mRoadDirectCode;
-                    submitRequest.pic = mImageUrlList.toString();
+                    submitRequest.lampPic = mImageUrlList.toString();
                     submitRequest.poleCode = mPoleCode;
                     submitRequest.lampHolderSetting = lampHolderSetting;
                     submitRequest.remarks = et_remark.getEditableText().toString();
@@ -512,8 +512,7 @@ public class CheckActivity extends BaseActivity<CheckContract.presenter> impleme
         if (!TextUtils.isEmpty(mRoadDirectStr)) {
             for (int i = 0; i < mRoadDirectDictList.size(); i++) {
                 if (TextUtils.equals(mRoadDirectStr, mRoadDirectDictList.get(i).dictLabel)) {
-                    //预先设置选中
-                    tagAdapter.setSelectedList(i);
+                    tagAdapter.setSelectedList(i); //预先设置选中
                     tvConfirm.setEnabled(true);
                     break;
                 }
@@ -521,7 +520,6 @@ public class CheckActivity extends BaseActivity<CheckContract.presenter> impleme
         } else {
             tvConfirm.setEnabled(false);
         }
-
         layoutTag.setAdapter(tagAdapter);
         layoutTag.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
@@ -1050,7 +1048,7 @@ public class CheckActivity extends BaseActivity<CheckContract.presenter> impleme
     protected void onStop() {
         super.onStop();
         mTimes = 0;
-        mTvSubmit.setEnabled(false);
+//        mTvSubmit.setEnabled(false);
         mLocationManager.removeUpdates(mLocationListener);
     }
 }
