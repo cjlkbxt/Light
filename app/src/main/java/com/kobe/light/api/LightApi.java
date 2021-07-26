@@ -1,6 +1,7 @@
 package com.kobe.light.api;
 
 
+import com.kobe.light.request.BindRequest;
 import com.kobe.light.request.LoginRequest;
 import com.kobe.light.request.SubmitRequest;
 import com.kobe.light.response.DeviceResponse;
@@ -44,5 +45,9 @@ public interface LightApi {
     @POST("common/upload/files")
     @Multipart
     Observable<UploadResponse> upload(@Part List<MultipartBody.Part> partList);
+
+    //灯控器绑定
+    @POST("lamp/install/add")
+    Observable<SubmitResponse> bind(@Body BindRequest bindRequest);
 
 }

@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding3.view.RxView;
 import com.kobe.lib_base.BaseActivity;
-import com.kobe.light.ui.scan.ScanActivity;
+import com.kobe.light.ui.check.CheckActivity;
 import com.kobe.light.R;
 import com.kobe.light.request.LoginRequest;
 import com.kobe.light.response.LoginResponse;
+import com.kobe.light.ui.select_work_type.SelectWorkTypeActivity;
 import com.kobe.light.utils.ToastUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.UltimateBarX;
 
@@ -82,8 +83,9 @@ public class LoginActivity extends BaseActivity<LoginContract.presenter> impleme
     @Override
     public void loginSuccess(LoginResponse loginResponse) {
         ToastUtil.showShort(this, loginResponse.msg);
-        Intent intent = new Intent(this, ScanActivity.class);
+        Intent intent = new Intent(this, SelectWorkTypeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

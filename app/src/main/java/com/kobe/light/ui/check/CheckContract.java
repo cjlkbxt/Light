@@ -1,4 +1,4 @@
-package com.kobe.light.ui.scan;
+package com.kobe.light.ui.check;
 
 import com.kobe.lib_base.IBasePresenter;
 import com.kobe.lib_base.IBaseView;
@@ -8,13 +8,12 @@ import com.kobe.light.response.DictResponse;
 import com.kobe.light.response.SubmitResponse;
 import com.kobe.light.response.UploadResponse;
 
-import java.io.File;
 import java.util.List;
 
 import okhttp3.MultipartBody;
 
 
-public interface ScanContract {
+public interface CheckContract {
 
     interface view extends IBaseView {
 

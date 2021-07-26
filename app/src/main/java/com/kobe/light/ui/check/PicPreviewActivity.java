@@ -1,4 +1,4 @@
-package com.kobe.light.ui.scan;
+package com.kobe.light.ui.check;
 
 import android.os.Bundle;
 import android.widget.ImageView;

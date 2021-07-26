@@ -1,4 +1,4 @@
-package com.kobe.light.ui.scan;
+package com.kobe.light.ui.check;
 
 import android.text.TextUtils;
 
@@ -14,21 +14,17 @@ import com.kobe.light.response.UploadResponse;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
-public class ScanPresenter extends BasePresenterImpl<ScanContract.view> implements ScanContract.presenter {
+public class CheckPresenter extends BasePresenterImpl<CheckContract.view> implements CheckContract.presenter {
     private LightApi mMedbitApi = RetrofitServiceManager.getInstance().create(LightApi.class);
 
-    public ScanPresenter(ScanContract.view view) {
+    public CheckPresenter(CheckContract.view view) {
         super(view);
     }
 

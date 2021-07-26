@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/image_background"
     android:orientation="vertical"
-    tools:context=".ui.scan.ScanActivity">
+    tools:context=".ui.check.CheckActivity">
 
     <TextView
         android:layout_width="wrap_content"

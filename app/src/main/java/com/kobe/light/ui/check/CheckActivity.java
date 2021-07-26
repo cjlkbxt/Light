@@ -1,4 +1,4 @@
-package com.kobe.light.ui.scan;
+package com.kobe.light.ui.check;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ScanActivity extends BaseActivity<ScanContract.presenter> implements View.OnClickListener, ScanContract.view {
+public class CheckActivity extends BaseActivity<CheckContract.presenter> implements View.OnClickListener, CheckContract.view {
     private final int REQUEST_CODE_SCAN = 101;
     private final int REQUEST_CODE_OPEN_GPS = 102;
     private ImageView mIvBack;
@@ -198,7 +197,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
             //如果是Network
             locationProvider = LocationManager.NETWORK_PROVIDER;
         } else {
-            ToastUtil.showShort(ScanActivity.this, "请开启GPS");
+            ToastUtil.showShort(CheckActivity.this, "请开启GPS");
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(intent, REQUEST_CODE_OPEN_GPS);
@@ -312,7 +311,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         mAdapter.setOnItemClickListener(new UploadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(ScanActivity.this, PicPreviewActivity.class);
+                Intent intent = new Intent(CheckActivity.this, PicPreviewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("url", mFilePathList.get(position));
                 intent.putExtras(bundle);
@@ -327,7 +326,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
 
             @Override
             public void onItemAddClick(View view, int position) {
-                EasyPhotos.createAlbum(ScanActivity.this, true, false, GlideEngine.getInstance())
+                EasyPhotos.createAlbum(CheckActivity.this, true, false, GlideEngine.getInstance())
                         .setFileProviderAuthority("com.kobe.light.fileprovider")
                         .setCount(8)
                         .start(new SelectCallback() {
@@ -375,17 +374,17 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
                         requestPermission(permissions, new OnPermissionsResultListener() {
                             @Override
                             public void OnSuccess() {
-                                Intent intent = new Intent(ScanActivity.this, CaptureActivity.class);
+                                Intent intent = new Intent(CheckActivity.this, CaptureActivity.class);
                                 startActivityForResult(intent, 0);
                             }
 
                             @Override
                             public void OnFail(List<String> failedPermissionList) {
-                                Toast.makeText(ScanActivity.this, "扫描功能需要开启相机权限", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CheckActivity.this, "扫描功能需要开启相机权限", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        Intent intent = new Intent(ScanActivity.this, CaptureActivity.class);
+                        Intent intent = new Intent(CheckActivity.this, CaptureActivity.class);
                         startActivityForResult(intent, REQUEST_CODE_SCAN);
                     }
                 });
@@ -440,8 +439,8 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
     }
 
     @Override
-    public ScanContract.presenter initPresenter() {
-        return new ScanPresenter(this);
+    public CheckContract.presenter initPresenter() {
+        return new CheckPresenter(this);
     }
 
     @Override
@@ -453,7 +452,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
             case R.id.tv_to_position:
                 // 判断GPS模块是否开启，如果没有则开启
                 if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-                    ToastUtil.showShort(ScanActivity.this, "请开启GPS");
+                    ToastUtil.showShort(CheckActivity.this, "请开启GPS");
                     // 转到手机设置界面，用户设置GPS
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivityForResult(intent, REQUEST_CODE_OPEN_GPS); // 设置完成后返回到原来的界面
@@ -505,7 +504,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter = new TagAdapter(mRoadDirectDictList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view, null);
                 tv.setText(mRoadDirectDictList.get(position).dictLabel);
                 return tv;
             }
@@ -560,7 +559,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter = new TagAdapter(mPolePositionDictList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view, null);
                 tv.setText(mPolePositionDictList.get(position).dictLabel);
                 return tv;
             }
@@ -614,7 +613,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter = new TagAdapter(mShineRoadDictList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view, null);
                 tv.setText(mShineRoadDictList.get(position).dictLabel);
                 return tv;
             }
@@ -668,7 +667,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter = new TagAdapter(mPoleNumList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view, null);
                 tv.setText(mPoleNumList.get(position) + "");
                 return tv;
             }
@@ -752,7 +751,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter = new TagAdapter(mShineCarRoadDictList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view, null);
                 tv.setText(mShineCarRoadDictList.get(position).dictLabel);
                 return tv;
             }
@@ -806,7 +805,7 @@ public class ScanActivity extends BaseActivity<ScanContract.presenter> implement
         TagAdapter tagAdapter2 = new TagAdapter(mShineDirectDictList) {
             @Override
             public View getView(FlowLayout parent, int position, Object o) {
-                TextView tv = (TextView) View.inflate(ScanActivity.this, R.layout.item_select_tag_view2, null);
+                TextView tv = (TextView) View.inflate(CheckActivity.this, R.layout.item_select_tag_view2, null);
                 tv.setText(mShineDirectDictList.get(position).dictLabel);
                 return tv;
             }
