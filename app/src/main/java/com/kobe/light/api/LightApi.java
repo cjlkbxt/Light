@@ -2,11 +2,16 @@ package com.kobe.light.api;
 
 
 import com.kobe.light.request.BindRequest;
+import com.kobe.light.request.BrightRequest;
 import com.kobe.light.request.LoginRequest;
 import com.kobe.light.request.SubmitRequest;
+import com.kobe.light.request.SwitchRequest;
+import com.kobe.light.response.BaseResponse;
 import com.kobe.light.response.DeviceResponse;
 import com.kobe.light.response.DictResponse;
+import com.kobe.light.response.LampInfoResponse;
 import com.kobe.light.response.LoginResponse;
+import com.kobe.light.response.PoleInfoResponse;
 import com.kobe.light.response.SubmitResponse;
 import com.kobe.light.response.UploadResponse;
 
@@ -24,7 +29,7 @@ import retrofit2.http.Query;
 
 public interface LightApi {
 
-    String FINAL_URL = "http://140.246.81.58:8587/hongli-lc/api/";
+    String FINAL_URL = "http://121.229.44.58:8587/hongli-lc/api/";
 
     //登录
     @POST("sys/login")
@@ -49,5 +54,29 @@ public interface LightApi {
     //灯控器绑定
     @POST("lamp/install/add")
     Observable<SubmitResponse> bind(@Body BindRequest bindRequest);
+
+    //灯杆扫码查询
+    @GET("lamp/pole/view2/poleCode={poleCode}")
+    Observable<PoleInfoResponse> getPoleInfo2(@Path("poleCode") String poleCode);
+
+    //灯具详情
+    @GET("lamp/lamp/view2/lampCode={lampCode}")
+    Observable<LampInfoResponse> getLampInfo2(@Path("lampCode") String lampCode);
+
+    //控制开关
+    @POST("device/data/switchOnOff")
+    Observable<BaseResponse> switchOnOff(@Body SwitchRequest switchRequest);
+
+    //调光
+    @POST("device/data/dimming")
+    Observable<BaseResponse> dimming(@Body BrightRequest brightRequest);
+
+    //列表
+    @GET("erp/wxrwbills/list")
+    Observable<BaseResponse> list(@Path("checkStatus") int checkStatus);
+
+    //提交
+    @POST("erp/wxrwbills/handle")
+    Observable<BaseResponse> handle();
 
 }

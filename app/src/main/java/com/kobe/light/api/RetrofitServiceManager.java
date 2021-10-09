@@ -1,6 +1,7 @@
 package com.kobe.light.api;
 
 import com.google.gson.GsonBuilder;
+import com.kobe.light.LightApplication;
 
 import java.io.IOException;
 import java.net.CookieHandler;
@@ -59,10 +60,30 @@ public class RetrofitServiceManager {
 
         // 创建 OKHttpClient
 
+        Interceptor tokenInterceptor = new Interceptor() {//全局拦截器，往请求头部添加 token 字段，实现了全局添加 token
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+                HttpUrl originalHttpUrl = original.url();
+                String token = LightApplication.getToken();
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("Authorization", token)
+                        .build();
+
+                // Request customization: add request headers
+                Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        };
+
         // init cookie manager
         CookieHandler cookieHandler = new CookieManager();
 
         OkHttpClient client = new OkHttpClient.Builder()
+                .addNetworkInterceptor(tokenInterceptor)
 //                .cookieJar(new JavaNetCookieJar(cookieHandler))
                 .connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_WRITE_TIME_OUT, TimeUnit.SECONDS)

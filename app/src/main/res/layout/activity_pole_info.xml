@@ -47,12 +47,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="设备道路"
+                            android:text="灯杆编号"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_device_road"
+                            android:id="@+id/tv_pole_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -76,12 +76,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="设备编号"
+                            android:text="设备道路"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_device_num"
+                            android:id="@+id/tv_device_road"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -105,12 +105,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="道路范围"
+                            android:text="地址"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_road_range"
+                            android:id="@+id/tv_address"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -136,88 +136,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="详细地址"
+                            android:text="经纬度"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
-                        <EditText
-                            android:id="@+id/et_detail_address"
+                        <TextView
+                            android:id="@+id/tv_jingweidu"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@null"
                             android:gravity="right|center_vertical"
-                            android:hint="请填写"
+                            android:hint="请选择"
                             android:textColor="#666666"
                             android:textColorHint="#999999"
                             android:textSize="14sp" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="灯杆"
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_light_port"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp"
-                            tools:text="双环形" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="GPS精准定位"
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_to_position"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:textColor="#3396FB"
-                            android:textSize="14sp"
-                            tools:text="去定位" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
 
                 </LinearLayout>
 
@@ -248,17 +181,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="道路方向"
+                            android:text="状态"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_road_direct"
+                            android:id="@+id/tv_condition"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
                             android:hint="请选择"
                             android:textColor="#666666"
@@ -280,7 +211,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="灯杆位置"
+                            android:text="电压"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
@@ -289,8 +220,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
                             android:hint="请选择"
                             android:textColor="#666666"
@@ -312,7 +241,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="照射道路"
+                            android:text="电流"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
@@ -321,8 +250,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
                             android:hint="请选择"
                             android:textColor="#666666"
@@ -344,7 +271,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="灯头设置"
+                            android:text="功率"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
@@ -353,8 +280,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
                             android:hint="请选择"
                             android:text="1"
@@ -364,204 +289,6 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="照射方向以道路方向为基准进行选择"
-                        android:textColor="#ff3b30"
-                        android:textSize="13sp" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_a"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="A."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_a"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_b"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="B."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_b"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_c"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="C."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_c"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_d"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="D."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_d"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_e"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="E."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_e"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_f"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="F."
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_f"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/icon_login_next"
-                            android:drawablePadding="2dp"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择 照射车道/照射方向"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/et_remark"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:gravity="right"
-                            android:hint="请填写"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -569,16 +296,27 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="备注"
+                            android:text="型号"
                             android:textColor="#333333"
                             android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择"
+                            android:text="1"
+                            android:textColor="#666666"
+                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -596,17 +334,121 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="添加照片"
+                            android:text="开灯时间"
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择"
+                            android:text="1"
+                            android:textColor="#666666"
+                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_upload"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关灯时间"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择"
+                            android:text="1"
+                            android:textColor="#666666"
+                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="亮灯开关"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择"
+                            android:text="1"
+                            android:textColor="#666666"
+                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设置亮度"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择"
+                            android:text="1"
+                            android:textColor="#666666"
+                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
