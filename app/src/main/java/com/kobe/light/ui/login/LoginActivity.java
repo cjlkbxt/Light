@@ -13,6 +13,7 @@ import com.kobe.light.ui.check.CheckActivity;
 import com.kobe.light.R;
 import com.kobe.light.request.LoginRequest;
 import com.kobe.light.response.LoginResponse;
+import com.kobe.light.ui.select.SelectActivity;
 import com.kobe.light.ui.select_work_type.SelectWorkTypeActivity;
 import com.kobe.light.utils.ToastUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.UltimateBarX;
@@ -85,7 +86,7 @@ public class LoginActivity extends BaseActivity<LoginContract.presenter> impleme
     public void loginSuccess(LoginResponse loginResponse) {
         ToastUtil.showShort(this, loginResponse.msg);
         SpManager.getInstance(this).put("token", loginResponse.data);
-        Intent intent = new Intent(this, SelectWorkTypeActivity.class);
+        Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
         finish();
     }

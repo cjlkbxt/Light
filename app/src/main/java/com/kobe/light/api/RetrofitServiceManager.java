@@ -8,11 +8,13 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Authenticator;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,17 +38,16 @@ public class RetrofitServiceManager {
 
     private RetrofitServiceManager() {
 
-//        Authenticator authenticator = new Authenticator() {//当服务器返回的状态码为401时，会自动执行里面的代码，也就实现了自动刷新token
-//            @Override
-//            public Request authenticate(Route route, Response response) throws IOException {
-//                Log.d("RetrofitServiceManager", "==========>   重新刷新了token");//这里可以进行刷新 token 的操作
-////                instance.getUploadToken()
-//                String token = MedbitApplication.getToken();
-//                return response.request().newBuilder()
-//                        .header("_accessToken_", CommonUtil.toURLEncoded(token))
-//                        .build();
-//            }
-//        };
+        Authenticator authenticator = new Authenticator() {//当服务器返回的状态码为401时，会自动执行里面的代码，也就实现了自动刷新token
+            @Override
+            public Request authenticate(Route route, Response response) throws IOException {
+//                instance.getUploadToken()
+                String token = LightApplication.getToken();
+                return response.request().newBuilder()
+                        .header("token", token)
+                        .build();
+            }
+        };
 
 //        HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
 //        //新建log拦截器
@@ -59,34 +60,50 @@ public class RetrofitServiceManager {
 //        loggingInterceptor.setLevel(level);
 
         // 创建 OKHttpClient
-
-        Interceptor tokenInterceptor = new Interceptor() {//全局拦截器，往请求头部添加 token 字段，实现了全局添加 token
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
-                String token = LightApplication.getToken();
-                HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("Authorization", token)
-                        .build();
-
-                // Request customization: add request headers
-                Request.Builder requestBuilder = original.newBuilder()
-                        .url(url);
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        };
+//
+//        Interceptor tokenInterceptor = new Interceptor() {//全局拦截器，往请求头部添加 token 字段，实现了全局添加 token
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request original = chain.request();
+//                HttpUrl originalHttpUrl = original.url();
+//                String token = LightApplication.getToken();
+//                HttpUrl url = originalHttpUrl.newBuilder()
+//                        .addQueryParameter("token", token)
+//                        .build();
+//
+//                // Request customization: add request headers
+//                Request.Builder requestBuilder = original.newBuilder()
+//                        .header
+//                        .url(url);
+//
+//                Request request = requestBuilder.build();
+//                return chain.proceed(request);
+//            }
+//        };
 
         // init cookie manager
         CookieHandler cookieHandler = new CookieManager();
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addNetworkInterceptor(tokenInterceptor)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
+
+                        Request request = original.newBuilder()
+                                .header("Authorization", LightApplication.getToken())
+                                .method(original.method(), original.body())
+                                .build();
+
+                        return chain.proceed(request);
+
+                    }
+                })
+//                .authenticator(authenticator)
 //                .cookieJar(new JavaNetCookieJar(cookieHandler))
                 .connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_WRITE_TIME_OUT, TimeUnit.SECONDS)
+
 
 //                .addNetworkInterceptor(new Interceptor() {
 //                    @Override

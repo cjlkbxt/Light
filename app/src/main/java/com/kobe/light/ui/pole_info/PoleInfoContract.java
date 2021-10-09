@@ -8,6 +8,8 @@ import com.kobe.light.request.SwitchRequest;
 import com.kobe.light.response.BaseResponse;
 import com.kobe.light.response.DeviceResponse;
 import com.kobe.light.response.DictResponse;
+import com.kobe.light.response.LampInfoResponse;
+import com.kobe.light.response.PoleInfoResponse;
 import com.kobe.light.response.SubmitResponse;
 import com.kobe.light.response.UploadResponse;
 
@@ -23,9 +25,9 @@ public interface PoleInfoContract {
 
     interface view extends IBaseView {
 
-        void showPoleInfo(DeviceResponse deviceResponse);
+        void showPoleInfo(PoleInfoResponse poleInfoResponse);
 
-        void showLampInfo(DictResponse dictResponse);
+        void showLampInfo(LampInfoResponse lampInfoResponse);
 
         void switchOnOff(BaseResponse baseResponse);
 
@@ -35,9 +37,9 @@ public interface PoleInfoContract {
 
     interface presenter extends IBasePresenter {
 
-        void getPoleInfo2(String dictType);
+        void getPoleInfo2(String poleCode);
 
-        void getLampInfo2(String dictType);
+        void getLampInfo2(String lampCode);
 
         void switchOnOff(SwitchRequest switchRequest);
 

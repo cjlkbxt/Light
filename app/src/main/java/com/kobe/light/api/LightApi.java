@@ -5,11 +5,13 @@ import com.kobe.light.request.BindRequest;
 import com.kobe.light.request.BrightRequest;
 import com.kobe.light.request.LoginRequest;
 import com.kobe.light.request.SubmitRequest;
+import com.kobe.light.request.SubmitRequest2;
 import com.kobe.light.request.SwitchRequest;
 import com.kobe.light.response.BaseResponse;
 import com.kobe.light.response.DeviceResponse;
 import com.kobe.light.response.DictResponse;
 import com.kobe.light.response.LampInfoResponse;
+import com.kobe.light.response.ListResponse;
 import com.kobe.light.response.LoginResponse;
 import com.kobe.light.response.PoleInfoResponse;
 import com.kobe.light.response.SubmitResponse;
@@ -56,12 +58,12 @@ public interface LightApi {
     Observable<SubmitResponse> bind(@Body BindRequest bindRequest);
 
     //灯杆扫码查询
-    @GET("lamp/pole/view2/poleCode={poleCode}")
-    Observable<PoleInfoResponse> getPoleInfo2(@Path("poleCode") String poleCode);
+    @GET("lamp/pole/view2")
+    Observable<PoleInfoResponse> getPoleInfo2(@Query("poleCode") String poleCode);
 
     //灯具详情
-    @GET("lamp/lamp/view2/lampCode={lampCode}")
-    Observable<LampInfoResponse> getLampInfo2(@Path("lampCode") String lampCode);
+    @GET("lamp/lamp/view2")
+    Observable<LampInfoResponse> getLampInfo2(@Query("lampCode") String lampCode);
 
     //控制开关
     @POST("device/data/switchOnOff")
@@ -73,10 +75,10 @@ public interface LightApi {
 
     //列表
     @GET("erp/wxrwbills/list")
-    Observable<BaseResponse> list(@Path("checkStatus") int checkStatus);
+    Observable<ListResponse> list();
 
     //提交
     @POST("erp/wxrwbills/handle")
-    Observable<BaseResponse> handle();
+    Observable<BaseResponse> handle(@Body SubmitRequest2 submitRequest2);
 
 }

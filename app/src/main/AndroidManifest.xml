@@ -85,7 +85,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kobe.light.fileprovider"
+            android:authorities="com.kobe.light2.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

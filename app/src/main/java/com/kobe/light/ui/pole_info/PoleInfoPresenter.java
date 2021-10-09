@@ -23,12 +23,12 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
 
 
     @Override
-    public void getPoleInfo2(String dictType) {
+    public void getPoleInfo2(String poleCode) {
         DisposableObserver<PoleInfoResponse> observer = new DisposableObserver<PoleInfoResponse>() {
             @Override
             public void onNext(PoleInfoResponse poleInfoResponse) {
                 if (poleInfoResponse.code == 0) {
-//                    getView().showPoleInfo(baseResponse);
+                    getView().showPoleInfo(poleInfoResponse);
                 }
             }
 
@@ -42,7 +42,7 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             }
         };
 
-        mMedbitApi.getPoleInfo2(dictType)
+        mMedbitApi.getPoleInfo2(poleCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -51,12 +51,12 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
     }
 
     @Override
-    public void getLampInfo2(String dictType) {
+    public void getLampInfo2(String lampCode) {
         DisposableObserver<LampInfoResponse> observer = new DisposableObserver<LampInfoResponse>() {
             @Override
             public void onNext(LampInfoResponse lampInfoResponse) {
                 if (lampInfoResponse.code == 0) {
-//                    getView().showPoleInfo(baseResponse);
+                    getView().showLampInfo(lampInfoResponse);
                 }
             }
 
@@ -70,7 +70,7 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             }
         };
 
-        mMedbitApi.getLampInfo2(dictType)
+        mMedbitApi.getLampInfo2(lampCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

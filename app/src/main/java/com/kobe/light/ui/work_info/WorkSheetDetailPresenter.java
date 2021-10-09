@@ -11,21 +11,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class WorkInfoPresenter extends BasePresenterImpl<WorkInfoContract.view> implements WorkInfoContract.presenter {
+public class WorkSheetDetailPresenter extends BasePresenterImpl<WorkSheetDetailContract.view> implements WorkSheetDetailContract.presenter {
     private LightApi mMedbitApi = RetrofitServiceManager.getInstance().create(LightApi.class);
 
-    public WorkInfoPresenter(WorkInfoContract.view view) {
+    public WorkSheetDetailPresenter(WorkSheetDetailContract.view view) {
         super(view);
     }
 
 
     @Override
-    public void list() {
-        DisposableObserver<ListResponse> observer = new DisposableObserver<ListResponse>() {
+    public void submit(SubmitRequest2 submitRequest2) {
+        DisposableObserver<BaseResponse> observer = new DisposableObserver<BaseResponse>() {
             @Override
-            public void onNext(ListResponse listResponse) {
-                if (listResponse.code == 0) {
-                    getView().showListResponse(listResponse);
+            public void onNext(BaseResponse baseResponse) {
+                if (baseResponse.code == 0) {
+//                    getView().showPoleInfo(baseResponse);
                 }
             }
 
@@ -39,11 +39,10 @@ public class WorkInfoPresenter extends BasePresenterImpl<WorkInfoContract.view> 
             }
         };
 
-        mMedbitApi.list()
+        mMedbitApi.handle(submitRequest2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
         addDisposable(observer);
     }
-
 }

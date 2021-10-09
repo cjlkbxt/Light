@@ -1,7 +1,7 @@
 package com.kobe.light.response;
 
-public class LampInfoResponse {
+public class ListResponse {
     public String msg;
     public int code;
-    public LampInfoBean data;
+    public ListBean data;
 }

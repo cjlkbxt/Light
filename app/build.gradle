@@ -7,7 +7,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.kobe.light"
+        applicationId "com.kobe.light2"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
