@@ -9,29 +9,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.kobe.lib_base.BaseActivity;
 import com.kobe.light.R;
 import com.kobe.light.adapter.MyFragmentPagerAdapter;
-import com.kobe.light.request.SubmitRequest2;
-import com.kobe.light.response.BaseResponse;
-import com.kobe.light.response.DeviceResponse;
-import com.kobe.light.response.DictResponse;
-import com.kobe.light.response.ListResponse;
+import com.kobe.light.response.WorkSheetListResponse;
 import com.kobe.light.response.WorkSheetBean;
-import com.kobe.light.ui.pole_info.PoleInfoContract;
-import com.kobe.light.ui.pole_info.PoleInfoPresenter;
 import com.zackratos.ultimatebarx.ultimatebarx.UltimateBarX;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> implements View.OnClickListener, WorkInfoContract.view {
+public class WorkSheetListActivity extends BaseActivity<WorkSheetListContract.presenter> implements View.OnClickListener, WorkSheetListContract.view {
 
     private ImageView mIvBack;
     private TextView mTitle;
@@ -40,10 +32,9 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> i
 
     private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
     private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
-    private WorkInfoFragment mAllWorkInfoFragment;
-    private WorkInfoFragment mWorkInfoFragment;
-    private WorkInfoFragment mWorkInfoFragment2;
-
+    private WorkSheetListFragment mAllWorkInfoFragment;
+    private WorkSheetListFragment mWorkInfoFragment;
+    private WorkSheetListFragment mWorkInfoFragment2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +48,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> i
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_work_info;
+        return R.layout.activity_work_sheet_list;
     }
 
     @Override
@@ -70,20 +61,19 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> i
 
     @Override
     protected void initData() {
-        mTitle.setText("工单详情");
-        mPresenter.list();
-
+        mTitle.setText("维修工单");
+        mPresenter.getWorkSheetList();
     }
 
     @SuppressLint("CheckResult")
     @Override
     protected void registerListener() {
-//        mIvBack.setOnClickListener(this);
+        mIvBack.setOnClickListener(this);
     }
 
     @Override
-    public WorkInfoContract.presenter initPresenter() {
-        return new WorkInfoPresenter(this);
+    public WorkSheetListContract.presenter initPresenter() {
+        return new WorkSheetListPresenter(this);
     }
 
     @Override
@@ -97,30 +87,28 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> i
         }
     }
 
-
     @Override
-    public void showListResponse(ListResponse listResponse) {
+    public void showWorkSheetListResponse(WorkSheetListResponse listResponse) {
         mFragmentList.clear();
         List<WorkSheetBean> list = new ArrayList<>();
         List<WorkSheetBean> list2 = new ArrayList<>();
         for (WorkSheetBean workSheetBean : listResponse.data.list) {
-            if (TextUtils.equals(workSheetBean.checkStatus, "1")) {
+            if (TextUtils.equals(workSheetBean.checkStatus, "0")) {
                 list.add(workSheetBean);
             } else {
                 list2.add(workSheetBean);
             }
         }
         if (mAllWorkInfoFragment == null) {
-            mAllWorkInfoFragment = new WorkInfoFragment();
+            mAllWorkInfoFragment = new WorkSheetListFragment();
         }
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", (Serializable) listResponse.data.list);
         mAllWorkInfoFragment.setArguments(bundle);
         addTabFragment(mAllWorkInfoFragment, "全部");
 
-
         if (mWorkInfoFragment == null) {
-            mWorkInfoFragment = new WorkInfoFragment();
+            mWorkInfoFragment = new WorkSheetListFragment();
         }
         Bundle bundle2 = new Bundle();
         bundle2.putSerializable("list", (Serializable) list);
@@ -129,7 +117,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoContract.presenter> i
 
 
         if (mWorkInfoFragment2 == null) {
-            mWorkInfoFragment2 = new WorkInfoFragment();
+            mWorkInfoFragment2 = new WorkSheetListFragment();
         }
         Bundle bundle3 = new Bundle();
         bundle3.putSerializable("list", (Serializable) list2);

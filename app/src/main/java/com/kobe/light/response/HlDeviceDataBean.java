@@ -2,16 +2,16 @@ package com.kobe.light.response;
 
 public class HlDeviceDataBean {
     public int switchState;
-    public String voltage;
-    public String curr;
-    public String power;
+    public int voltage;
+    public int curr;
+    public int power;
 
-    public String pm2d5;
-    public String pm10;
-    public String humidity;
-    public String noise;
-    public String railfall;
-    public String windSpeed;
-    public String windDirection;
-    public String brightness;
+    public int pm2d5;
+    public int pm10;
+    public int humidity;
+    public int noise;
+    public int railfall;
+    public int windSpeed;
+    public int windDirection;
+    public int brightness;
 }

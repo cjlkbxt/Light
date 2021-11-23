@@ -29,9 +29,11 @@ public interface PoleInfoContract {
 
         void showLampInfo(LampInfoResponse lampInfoResponse);
 
-        void switchOnOff(BaseResponse baseResponse);
+        void switchOnOffSuccess(BaseResponse baseResponse);
 
-        void dimming(BaseResponse baseResponse);
+        void dimmingSuccess(BaseResponse baseResponse);
+
+        void showToast(String msg);
 
     }
 

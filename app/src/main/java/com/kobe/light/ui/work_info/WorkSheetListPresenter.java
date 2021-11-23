@@ -3,29 +3,27 @@ package com.kobe.light.ui.work_info;
 import com.kobe.lib_base.BasePresenterImpl;
 import com.kobe.light.api.LightApi;
 import com.kobe.light.api.RetrofitServiceManager;
-import com.kobe.light.request.SubmitRequest2;
-import com.kobe.light.response.BaseResponse;
-import com.kobe.light.response.ListResponse;
+import com.kobe.light.response.WorkSheetListResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class WorkInfoPresenter extends BasePresenterImpl<WorkInfoContract.view> implements WorkInfoContract.presenter {
+public class WorkSheetListPresenter extends BasePresenterImpl<WorkSheetListContract.view> implements WorkSheetListContract.presenter {
     private LightApi mMedbitApi = RetrofitServiceManager.getInstance().create(LightApi.class);
 
-    public WorkInfoPresenter(WorkInfoContract.view view) {
+    public WorkSheetListPresenter(WorkSheetListContract.view view) {
         super(view);
     }
 
 
     @Override
-    public void list() {
-        DisposableObserver<ListResponse> observer = new DisposableObserver<ListResponse>() {
+    public void getWorkSheetList() {
+        DisposableObserver<WorkSheetListResponse> observer = new DisposableObserver<WorkSheetListResponse>() {
             @Override
-            public void onNext(ListResponse listResponse) {
+            public void onNext(WorkSheetListResponse listResponse) {
                 if (listResponse.code == 0) {
-                    getView().showListResponse(listResponse);
+                    getView().showWorkSheetListResponse(listResponse);
                 }
             }
 
@@ -39,7 +37,7 @@ public class WorkInfoPresenter extends BasePresenterImpl<WorkInfoContract.view> 
             }
         };
 
-        mMedbitApi.list()
+        mMedbitApi.getWorkSheetList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

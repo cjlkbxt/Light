@@ -9,6 +9,7 @@ import com.kobe.light.response.BaseResponse;
 import com.kobe.light.response.DeviceResponse;
 import com.kobe.light.response.LampInfoResponse;
 import com.kobe.light.response.PoleInfoResponse;
+import com.kobe.light.utils.ToastUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -29,6 +30,8 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             public void onNext(PoleInfoResponse poleInfoResponse) {
                 if (poleInfoResponse.code == 0) {
                     getView().showPoleInfo(poleInfoResponse);
+                } else {
+                    getView().showToast(poleInfoResponse.msg);
                 }
             }
 
@@ -57,6 +60,8 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             public void onNext(LampInfoResponse lampInfoResponse) {
                 if (lampInfoResponse.code == 0) {
                     getView().showLampInfo(lampInfoResponse);
+                } else {
+                    getView().showToast(lampInfoResponse.msg);
                 }
             }
 
@@ -83,7 +88,9 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             @Override
             public void onNext(BaseResponse baseResponse) {
                 if (baseResponse.code == 0) {
-//                    getView().showPoleInfo(baseResponse);
+                    getView().switchOnOffSuccess(baseResponse);
+                } else {
+                    getView().showToast(baseResponse.msg);
                 }
             }
 
@@ -110,7 +117,9 @@ public class PoleInfoPresenter extends BasePresenterImpl<PoleInfoContract.view> 
             @Override
             public void onNext(BaseResponse baseResponse) {
                 if (baseResponse.code == 0) {
-//                    getView().showPoleInfo(baseResponse);
+                    getView().dimmingSuccess(baseResponse);
+                } else {
+                    getView().showToast(baseResponse.msg);
                 }
             }
 

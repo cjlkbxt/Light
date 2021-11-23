@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.check.CheckActivity">
+    android:layout_height="match_parent">
 
     <include layout="@layout/custom_toolbar2" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_title_bar">
@@ -26,11 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
-                app:cardCornerRadius="5dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_title_bar">
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,8 +54,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:textColor="#666666"
-                            android:textSize="14sp"
-                            tools:text="广州路" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <View
@@ -87,8 +82,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:textColor="#666666"
-                            android:textSize="14sp"
-                            tools:text="B001" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <View
@@ -114,12 +108,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawablePadding="2dp"
                             android:gravity="right|center_vertical"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp"
-                            tools:text="广告牌-三和转盘" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <View
@@ -146,9 +137,35 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="控制箱"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_control_box"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#666666"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -156,22 +173,43 @@
 
             </androidx.cardview.widget.CardView>
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/id_flowlayout"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                app:max_select="1"
-                tools:ignore="MissingConstraints" />
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="灯具"
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/id_flowlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:max_select="1"
+                        tools:ignore="MissingConstraints" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                app:cardCornerRadius="5dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_title_bar">
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="12dp"
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,9 +237,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -224,14 +260,12 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_pole_position"
+                            android:id="@+id/tv_voltage"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -254,14 +288,12 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_shine_road"
+                            android:id="@+id/tv_current"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -284,15 +316,12 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tv_pole_num"
+                            android:id="@+id/tv_power"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -306,7 +335,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -316,14 +346,12 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tv_model"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -331,7 +359,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#EAEAEA" />
+                        android:background="#EAEAEA"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -347,14 +376,99 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tv_open_light_time"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="第一次调光时间"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_first_adjust_light_time"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#666666"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="第二次调光时间"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_second_adjust_light_time"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#666666"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EAEAEA" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="第三次调光时间"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_third_adjust_light_time"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#666666"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -378,107 +492,12 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tv_close_light_time"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
                             android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="第一次关灯时间"
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="第二次关灯时间"
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="第三次关灯时间"
-                            android:textColor="#333333"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -501,16 +520,12 @@
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_tog"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择"
-                            android:text="1"
-                            android:textColor="#666666"
-                            android:textColorHint="#999999"
-                            android:textSize="14sp" />
+                            android:checked="false" />
 
                     </LinearLayout>
 
@@ -532,18 +547,42 @@
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                        <SeekBar
+                            android:id="@+id/seekbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:max="100"
+                            android:maxHeight="10dp"
+                            android:minHeight="10dp"
+                            android:progressDrawable="@drawable/seek_bar_bg"
+                            android:thumb="@mipmap/ic_controller_easy_photos"
+                            android:thumbOffset="0dp" />
+
+                        <TextView
+                            android:id="@+id/tv_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择"
                             android:text="1"
                             android:textColor="#666666"
                             android:textColorHint="#999999"
                             android:textSize="14sp" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_confirm"
+                        style="@style/bottomButtonStyle"
+                        android:layout_width="100dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="right"
+                        android:text="确认调光"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
 
                 </LinearLayout>
 
@@ -552,21 +591,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <TextView
-        android:id="@+id/tv_submit"
-        style="@style/bottomButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="20dp"
-        android:enabled="true"
-        android:gravity="center"
-        android:text="提  交"
-        android:textColor="#ffffff"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import com.kobe.light.response.BaseResponse;
 import com.kobe.light.response.DeviceResponse;
 import com.kobe.light.response.DictResponse;
 import com.kobe.light.response.LampInfoResponse;
-import com.kobe.light.response.ListResponse;
+import com.kobe.light.response.WorkSheetListResponse;
 import com.kobe.light.response.LoginResponse;
 import com.kobe.light.response.PoleInfoResponse;
 import com.kobe.light.response.SubmitResponse;
@@ -75,10 +75,10 @@ public interface LightApi {
 
     //列表
     @GET("erp/wxrwbills/list")
-    Observable<ListResponse> list();
+    Observable<WorkSheetListResponse> getWorkSheetList();
 
     //提交
     @POST("erp/wxrwbills/handle")
-    Observable<BaseResponse> handle(@Body SubmitRequest2 submitRequest2);
+    Observable<BaseResponse> submitWorkSheet(@Body SubmitRequest2 submitRequest2);
 
 }
