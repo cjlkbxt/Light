@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image_background"
+    android:background="@drawable/image_background_whole_repair"
     android:orientation="vertical"
     tools:context=".ui.check.CheckActivity">
 
@@ -27,18 +27,21 @@
         android:textColor="#ffffff"
         android:textSize="20sp" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="40dp"
-        android:src="@drawable/logo" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="[维修]"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/et_account"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="280dp"
         android:background="@drawable/edittext_bg"
         android:gravity="center"
         android:hint="请输入账号"
