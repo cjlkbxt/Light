@@ -21,6 +21,7 @@ import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
@@ -210,5 +211,35 @@ public class CameraManager {
             return camera.getParameters().getPreviewSize();
         }
         return null;
+    }
+
+    Camera.Parameters parameter;
+
+    public void openLight() {
+        if (camera != null) {
+            parameter = camera.getParameters();
+            parameter.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            camera.setParameters(parameter);
+        }
+    }
+
+    public boolean isLightOn() {
+        if (camera != null) {
+            parameter = camera.getParameters();
+            if (TextUtils.equals(parameter.getFlashMode(), Camera.Parameters.FLASH_MODE_TORCH)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void offLight() {
+        if (camera != null) {
+            parameter = camera.getParameters();
+            parameter.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(parameter);
+        }
     }
 }

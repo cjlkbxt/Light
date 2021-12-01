@@ -5,34 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image_background_whole_repair"
-    android:orientation="vertical"
-    tools:context=".ui.check.CheckActivity">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:text="登录"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:text="欢迎使用宏力照明"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:text="[维修]"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:text="欢迎使用工单维修"
         android:textColor="#ffffff"
         android:textSize="20sp" />
 

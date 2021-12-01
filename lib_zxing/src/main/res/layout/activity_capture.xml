@@ -45,9 +45,18 @@
             android:id="@+id/capture_mask_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@id/capture_crop_view"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/shadow" />
+
+        <ImageView
+            android:id="@+id/iv_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/capture_crop_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@mipmap/icon_light_off" />
 
         <ImageView
             android:id="@+id/capture_mask_left"

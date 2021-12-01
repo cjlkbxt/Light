@@ -3,21 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/code/Light/app/src/main/res/drawable/seek_bar_bg.xml" value="0.2734375" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_login.xml" value="0.26621847886098404" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_pole_info.xml" value="0.20168066580377575" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_scan.xml" value="0.4033613316075515" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_scan2.xml" value="0.12335359675785208" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_select.xml" value="0.25364583333333335" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_select_work_type.xml" value="0.12335359675785208" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_work_info.xml" value="0.2390625" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_work_info_detail.xml" value="0.25729166666666664" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/activity_work_sheet_detail.xml" value="0.26621847886098404" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/custom_toolbar2.xml" value="0.129981884057971" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/dialog_device.xml" value="0.19519927536231885" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/fragment_work_info.xml" value="0.2390625" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/fragment_work_sheet_list.xml" value="0.25729166666666664" />
-        <entry key="..\:/code/Light/app/src/main/res/layout/item_work_sheet.xml" value="0.26979166666666665" />
+        <entry key="..\:/code/Light/app/src/main/res/layout/activity_login.xml" value="0.20168066580377575" />
+        <entry key="..\:/code/Light/lib_zxing/src/main/res/layout/activity_capture.xml" value="0.25729166666666664" />
       </map>
     </option>
   </component>

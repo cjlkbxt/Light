@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -67,6 +68,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
     private RelativeLayout scanContainer;
     private RelativeLayout scanCropView;
     private ImageView scanLine;
+    private ImageView mIvLight;
 
     private Rect mCropRect = null;
     private boolean isHasSurface = false;
@@ -91,6 +93,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
         scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
         scanLine = (ImageView) findViewById(R.id.capture_scan_line);
+        mIvLight = (ImageView) findViewById(R.id.iv_light);
 
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
@@ -116,7 +119,23 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         // wrong size and partially
         // off screen.
         cameraManager = new CameraManager(getApplication());
-
+        mIvLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cameraManager.isLightOn()) {
+                    cameraManager.offLight();
+                    mIvLight.setImageResource(R.mipmap.icon_light_off);
+                } else {
+                    cameraManager.openLight();
+                    mIvLight.setImageResource(R.mipmap.icon_light_on);
+                }
+            }
+        });
+        if (cameraManager.isLightOn()) {
+            mIvLight.setImageResource(R.mipmap.icon_light_on);
+        } else {
+            mIvLight.setImageResource(R.mipmap.icon_light_off);
+        }
         handler = null;
 
         if (isHasSurface) {
