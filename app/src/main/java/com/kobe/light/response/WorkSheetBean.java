@@ -22,5 +22,8 @@ public class WorkSheetBean implements Serializable {
 
     public String remarks;//维修方法
 
+    public String baiduLongitude;//经度
+    public String baiduLatitude;//纬度
+
 
 }

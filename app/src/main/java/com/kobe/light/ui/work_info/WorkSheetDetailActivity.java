@@ -1,9 +1,12 @@
 package com.kobe.light.ui.work_info;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,6 +34,7 @@ import com.kobe.light.response.UploadResponse;
 import com.kobe.light.response.WorkSheetBean;
 import com.kobe.light.ui.check.CheckActivity;
 import com.kobe.light.ui.check.PicPreviewActivity;
+import com.kobe.light.utils.MapUtils;
 import com.kobe.light.utils.ToastUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.UltimateBarX;
 
@@ -53,6 +57,8 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
     private TextView tv_control_box;//控制箱
     private TextView tv_fix_status;//维修状态
     private TextView tv_road;//道路
+    private TextView tv_jingweidu;//经纬度
+    private TextView tv_daohang;//导航
 
     private TextView tv_fault_type;//故障类型
     private EditText et_solve_method;//解决方法
@@ -70,8 +76,9 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
 
     private final List<String> mFilePathList = new ArrayList<>();
 
-
     private String mImageUrl;
+
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +88,7 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
                 .color(Color.WHITE)
                 .light(true)
                 .applyStatusBar();
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
@@ -88,6 +96,18 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_daohang:
+                if (!TextUtils.isEmpty(mWorkSheetBean.baiduLatitude)) {
+                    if (!mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+//                        ToastUtil.showShort(this, "请开启GPS");
+                        // 转到手机设置界面，用户设置GPS
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    } else {
+                        MapUtils.startGuide2(this, mWorkSheetBean.baiduLatitude, mWorkSheetBean.baiduLongitude);
+                    }
+                }
                 break;
             default:
                 break;
@@ -128,6 +148,8 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
         tv_control_box = findViewById(R.id.tv_control_box);
         tv_fix_status = findViewById(R.id.tv_fix_status);
         tv_road = findViewById(R.id.tv_road);
+        tv_jingweidu = findViewById(R.id.tv_jingweidu);
+        tv_daohang = findViewById(R.id.tv_daohang);
         tv_fault_type = findViewById(R.id.tv_fault_type);
         et_solve_method = findViewById(R.id.et_solve_method);
 
@@ -174,6 +196,11 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
             tv_road.setText("");
         } else {
             tv_road.setText(mWorkSheetBean.field1Name);
+        }
+        if (TextUtils.isEmpty(mWorkSheetBean.baiduLongitude)) {
+            tv_jingweidu.setText("");
+        } else {
+            tv_jingweidu.setText(mWorkSheetBean.baiduLongitude + "\n" + mWorkSheetBean.baiduLatitude);
         }
         if (TextUtils.isEmpty(mWorkSheetBean.billCause)) {
             tv_fault_type.setText("");
@@ -246,6 +273,7 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
     @Override
     protected void registerListener() {
         mIvBack.setOnClickListener(this);
+        tv_daohang.setOnClickListener(this);
         RxView.clicks(mTvSubmit).throttleFirst(1, TimeUnit.SECONDS)
                 .subscribe(unit -> {
                     SubmitRequest2 submitRequest = new SubmitRequest2();
@@ -284,4 +312,6 @@ public class WorkSheetDetailActivity extends BaseActivity<WorkSheetDetailContrac
     public WorkSheetDetailContract.presenter initPresenter() {
         return new WorkSheetDetailPresenter(this);
     }
+
+
 }
